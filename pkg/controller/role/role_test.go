@@ -244,7 +244,7 @@ var _ = Describe("role_controller unit testing", func() {
 				).Should(BeTrue())
 			})
 
-			It("unset variable", func() {
+			It("unset variables", func() {
 				var (
 					varName = "TARANTOOL_WORKDIR"
 				)
