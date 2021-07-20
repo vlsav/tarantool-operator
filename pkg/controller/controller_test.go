@@ -147,7 +147,9 @@ var _ = Describe("controllers integration testing", func() {
             By("delete cluster")
             cluster := &tarantoolv1alpha1.Cluster{}
             _ = k8sClient.Get(ctx, client.ObjectKey{Name: clusterName, Namespace: namespace}, cluster)
-            _ = k8sClient.Delete(ctx, cluster)
+            Expect(
+                k8sClient.Delete(ctx, cluster),
+            ).NotTo(HaveOccurred(), "failed to delete test Cluster resource")
 
             By("delete Service")
             service := &corev1.Service{}
