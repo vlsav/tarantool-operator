@@ -53,6 +53,10 @@ var _ = Describe("controllers integration testing", func() {
             alias = fmt.Sprintf("%s-%d-%d", roleName, 0, 0)
             serviceName = "test-service"
 
+            cluster := &tarantoolv1alpha1.Cluster{}
+            _ = k8sClient.Get(ctx, client.ObjectKey{Name: clusterName, Namespace: namespace}, cluster)
+            _ = k8sClient.Delete(ctx, cluster)
+
             By("create new Cluster " + clusterName)
             cluster := helpers.NewCluster(helpers.ClusterParams{
                 Name:      clusterName,
@@ -147,9 +151,7 @@ var _ = Describe("controllers integration testing", func() {
             By("delete cluster")
             cluster := &tarantoolv1alpha1.Cluster{}
             _ = k8sClient.Get(ctx, client.ObjectKey{Name: clusterName, Namespace: namespace}, cluster)
-            Expect(
-                k8sClient.Delete(ctx, cluster),
-            ).NotTo(HaveOccurred(), "failed to delete test Cluster resource")
+            _ = k8sClient.Delete(ctx, cluster)
 
             By("delete Service")
             service := &corev1.Service{}
